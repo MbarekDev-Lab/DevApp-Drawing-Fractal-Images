@@ -23,6 +23,6 @@ namespace caveofprogramming {
 
 	};
 
-} /* namespace caveofprogramming */
+} 
 
 #endif /* BITMAP_H_ */
