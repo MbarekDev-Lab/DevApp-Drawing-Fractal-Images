@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="src\MainApp.cpp" />
+    <ClCompile Include="src\Bitmap.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="include\Bitmap.h" />
+    <ClInclude Include="include\BitmapFileHeader.h" />
+    <ClInclude Include="include\BitmapInfoHeader.h" />
+  </ItemGroup>
+</Project>
