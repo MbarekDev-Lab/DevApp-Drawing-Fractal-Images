@@ -10,5 +10,6 @@ int main()
 	bitmap.write("test.bmp");
 
 	std::cout << "Finished" << std::endl;
+
 	return 0;
 }
