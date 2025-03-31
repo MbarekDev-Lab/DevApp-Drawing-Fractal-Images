@@ -1,5 +1,5 @@
 #include "Bitmap.h"
-
+#include <fstream>
 #include <string>
 #include <cstdint>
 #include <memory>
@@ -24,6 +24,23 @@ namespace caveofprogramming {
 		BitmapInfoHeader infoHeader;
         fileName.fileSize = sizeof(BitmapFileHeader) + sizeof(BitmapInfoHeader) + m_width * m_height * 3; // Total file size in bytes.
         fileName.dataOffset = sizeof(BitmapFileHeader) + sizeof(BitmapInfoHeader); // Offset to the start of the pixel data.
+		infoHeader.width = m_width; // Width of the bitmap in pixels.
+		infoHeader.height = m_height; // Height of the bitmap in pixels.
+		ofstream file;
+		file.open(filename, ios::out | ios::binary);// Open the file in binary mode.
+
+		if (!file) {
+			return false;
+		}
+		file.write((char*)&fileName, sizeof(fileName));
+		file.write((char*)&infoHeader, sizeof(infoHeader));
+		file.write((char*)m_pPixels.get(), m_width * m_height * 3);
+
+		file.close();
+		if (!file) {
+			return false;
+		}
+
         return true;
     }
 
