@@ -15,7 +15,8 @@ int main()
 
 	for (int y = 0; y < HEIGHT; y++) {
 		for (int x = 0; x < WIDTH; x++) {
-			bitmap.setPixel(x, y, 0, 0, 255);
+			//bitmap.setPixel(x, y, 0, 0, 255);// blue
+			bitmap.setPixel(x, y, 255, 0, 0); // Set the color to red
 		}
 	}
 
