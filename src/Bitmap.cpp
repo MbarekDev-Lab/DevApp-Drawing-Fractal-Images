@@ -10,20 +10,29 @@ using namespace std;
 using namespace caveofprogramming;
 
 namespace caveofprogramming {
-     Bitmap::Bitmap(int width, int height) : m_width(width), m_height(height) , m_pPixels(new uint8_t[width*height*3]{}) {
-        // Constructor implementation
-    }
+	Bitmap::Bitmap(int width, int height) : m_width(width), m_height(height), m_pPixels(new uint8_t[width * height * 3]{}) {
+		// Constructor implementation
+	}
 
-    void Bitmap::setPixel(int x, int y, uint8_t red, uint8_t green, uint8_t blue) {
-        // setPixel implementation
-    }
+	void Bitmap::setPixel(int x, int y, uint8_t red, uint8_t green, uint8_t blue) {
+		// setPixel implementation
 
-    bool Bitmap::write(string filename) {
+		uint8_t* pPixels = m_pPixels.get();
+		//pPixels += (y * 3) * m_width + (x * 3);
+		 pPixels += (y * m_width + x) * 3; 
+
+		pPixels[0] = blue;
+		pPixels[1] = green;
+		pPixels[2] = red;
+
+	}
+
+	bool Bitmap::write(string filename) {
 		// write implementation
-        BitmapFileHeader fileName;
+		BitmapFileHeader fileName;
 		BitmapInfoHeader infoHeader;
-        fileName.fileSize = sizeof(BitmapFileHeader) + sizeof(BitmapInfoHeader) + m_width * m_height * 3; // Total file size in bytes.
-        fileName.dataOffset = sizeof(BitmapFileHeader) + sizeof(BitmapInfoHeader); // Offset to the start of the pixel data.
+		fileName.fileSize = sizeof(BitmapFileHeader) + sizeof(BitmapInfoHeader) + m_width * m_height * 3; // Total file size in bytes.
+		fileName.dataOffset = sizeof(BitmapFileHeader) + sizeof(BitmapInfoHeader); // Offset to the start of the pixel data.
 		infoHeader.width = m_width; // Width of the bitmap in pixels.
 		infoHeader.height = m_height; // Height of the bitmap in pixels.
 		ofstream file;
@@ -41,12 +50,12 @@ namespace caveofprogramming {
 			return false;
 		}
 
-        return true;
-    }
+		return true;
+	}
 
-    Bitmap::~Bitmap() {
-        // Destructor implementation
+	Bitmap::~Bitmap() {
+		// Destructor implementation
 
-    }
+	}
 
 } // namespace caveofprogramming
