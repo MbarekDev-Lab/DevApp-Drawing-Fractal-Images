@@ -1,4 +1,5 @@
 #include<iostream>
+#include<cstdint>
 #include"Bitmap.h"
 #include "Mandelbrot.h"
 
@@ -37,7 +38,7 @@ int main()
 	}
 	cout << min << ", " << max << endl;
 
-	bitmap.write("mbarek.bmp");
+	bitmap.write("mbarek2.bmp");
 	std::cout << "Finished" << std::endl;
 
 	return 0;
