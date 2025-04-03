@@ -16,17 +16,23 @@ int main()
 	double min = 999999;
 	double max = -999999;
 
+	unique_ptr<int[]> histogram(new int[Mandelbrot::MAX_ITERATIONS+1]{0});
+
 	//bitmap.setPixel(WIDTH / 2, 100, 255, 255, 255);
 
 	for (int y = 0; y < HEIGHT; y++) {
 		for (int x = 0; x < WIDTH; x++) {
 			//bitmap.setPixel(x, y, 0, 0, 255);// blue
 			//bitmap.setPixel(x, y, 255, 0, 0); // Set the color to red
-			double xFractal = (x - WIDTH / 2) * 2.0 / WIDTH;
+			double xFractal = (x - WIDTH / 2-200) * 2.0 / HEIGHT;
 			double yFractal = (y - HEIGHT / 2) * 2.0 / HEIGHT;
 
 			int iterations = mandelbrot.getIterations(xFractal, yFractal);
+			histogram[iterations]++;
+
 			uint8_t color = (uint8_t)(256 * (double)iterations / Mandelbrot::MAX_ITERATIONS);
+
+			//color = (uint8_t)(pow(color / 255.0, 3) * 255);
 
 			color = color * color * color;
 
@@ -36,6 +42,7 @@ int main()
 			if (xFractal > max) max = xFractal;
 		}
 	}
+	//bitmap.setPixel(100, 100, 255, 0, 0); // Set the color to red
 	cout << min << ", " << max << endl;
 
 	bitmap.write("mbarek2.bmp");
