@@ -4,11 +4,14 @@
     <ClCompile Include="src\MainApp.cpp" />
     <ClCompile Include="src\Bitmap.cpp" />
     <ClCompile Include="src\Mandelbrot.cpp" />
+    <ClCompile Include="src\ZoomList.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\Bitmap.h" />
     <ClInclude Include="include\BitmapFileHeader.h" />
     <ClInclude Include="include\BitmapInfoHeader.h" />
     <ClInclude Include="include\Mandelbrot.h" />
+    <ClInclude Include="include\Zoom.h" />
+    <ClInclude Include="include\ZoomList.h" />
   </ItemGroup>
 </Project>

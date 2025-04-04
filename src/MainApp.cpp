@@ -1,76 +1,76 @@
+
 #include <iostream>
 #include <cstdint>
-#include "Bitmap.h"
+#include <memory>
+#include <math.h>
 #include "Mandelbrot.h"
+#include "Bitmap.h"
+#include "ZoomList.h"
 
-using namespace caveofprogramming;
 using namespace std;
+using namespace caveofprogramming;
 
-int main()
-{
-    int const WIDTH = 800;
-    int const HEIGHT = 600;
+int main() {
 
-    Bitmap bitmap(WIDTH, HEIGHT);
-    Mandelbrot mandelbrot;
-    double min = 999999;
-    double max = -999999;
+	int const WIDTH = 800;
+	int const HEIGHT = 600;
 
-    unique_ptr<int[]> histogram(new int[Mandelbrot::MAX_ITERATIONS + 1] {0});
-    unique_ptr<int[]> fractal(new int[WIDTH * HEIGHT] {0});
+	Bitmap bitmap(WIDTH, HEIGHT);
 
-    for (int y = 0; y < HEIGHT; y++) {
-        for (int x = 0; x < WIDTH; x++) {
-            double xFractal = (x - WIDTH / 2 - 200) * 2.0 / HEIGHT;
-            double yFractal = (y - HEIGHT / 2) * 2.0 / HEIGHT;
+	double min = 999999;
+	double max = -999999;
 
-            int iterations = mandelbrot.getIterations(xFractal, yFractal);
-            fractal[y * WIDTH + x] = iterations;
+	unique_ptr<int[]> histogram(new int[Mandelbrot::MAX_ITERATIONS] { 0 });
+	unique_ptr<int[]> fractal(new int[WIDTH * HEIGHT] { 0 });
 
-            histogram[iterations]++;
-        }
-    }
+	for (int y = 0; y < HEIGHT; y++) {
+		for (int x = 0; x < WIDTH; x++) {
+			double xFractal = (x - WIDTH / 2 - 200) * 2.0 / HEIGHT;
+			double yFractal = (y - HEIGHT / 2) * 2.0 / HEIGHT;
 
-    cout << "Histogram: " << endl;
+			int iterations = Mandelbrot::getIterations(xFractal, yFractal);
 
-    int maxCount = 0;
-    for (int i = 0; i < Mandelbrot::MAX_ITERATIONS; i++) {
-        cout << histogram[i] << ", " << flush;
-        maxCount += histogram[i];
-    }
+			fractal[y * WIDTH + x] = iterations;
 
-    cout << min << ", " << max << endl;
+			if (iterations != Mandelbrot::MAX_ITERATIONS) {
+				histogram[iterations]++;
+			}
 
-    int total = 0;
-    for (int i = 0; i < Mandelbrot::MAX_ITERATIONS; i++) {
-        total += histogram[i];
-    }
+		}
+	}
 
-    for (int y = 0; y < HEIGHT; y++) {
-        for (int x = 0; x < WIDTH; x++) {
-            int iterations = fractal[y * WIDTH + x];
+	int total = 0;
+	for (int i = 0; i < Mandelbrot::MAX_ITERATIONS; i++) {
+		total += histogram[i];
+	}
 
-            uint8_t color = (uint8_t)(256 * (double)iterations / Mandelbrot::MAX_ITERATIONS);
+	for (int y = 0; y < HEIGHT; y++) {
+		for (int x = 0; x < WIDTH; x++) {
 
-            double hue = 0.0;
+			uint8_t red = 0;
+			uint8_t green = 0;
+			uint8_t blue = 0;
 
-            for (int i = 0; i < iterations; i++) {
-				hue += (double)histogram[i] / total;
-           }
-            
-            
-           // color = color * color * color;
-            uint8_t red = red = 0;
-            uint8_t green = hue * hue*255;
-            uint8_t blue = blue = 0;
+			int iterations = fractal[y * WIDTH + x];
 
-            bitmap.setPixel(x, y, red, green, blue);
+			if (iterations != Mandelbrot::MAX_ITERATIONS) {
 
-        }
-    }
+				double hue = 0.0;
 
-    bitmap.write("mbarek6.bmp");
-    std::cout << "Finished" << std::endl;
+				for (int i = 0; i <= iterations; i++) {
+					hue += ((double)histogram[i]) / total;
+				}
 
-    return 0;
+				green = pow(255, hue);
+			}
+
+			bitmap.setPixel(x, y, red, green, blue);
+
+		}
+	}
+
+	bitmap.write("test.bmp");
+
+	cout << "Finished." << endl;
+	return 0;
 }
