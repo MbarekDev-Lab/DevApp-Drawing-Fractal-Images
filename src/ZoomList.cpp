@@ -1,5 +1,8 @@
 #include "ZoomList.h"
+#include <iostream>
 
+
+using namespace std;
 namespace caveofprogramming {
 
 	ZoomList::ZoomList(int width, int height) : m_width(width), m_height(height) {
@@ -9,6 +12,10 @@ namespace caveofprogramming {
 
 	void ZoomList::add(const Zoom& zoom) {
 		zooms.push_back(zoom);
+
+		m_xCenter += (zoom.x - m_width / 2) * m_scale;
+		m_yCenter += (zoom.y - m_height / 2) * m_scale;
+
 	}
 
 	pair<double, double> ZoomList::doZoom(int x, int y) {
