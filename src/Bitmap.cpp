@@ -1,51 +1,44 @@
-#include "Bitmap.h"
 #include <fstream>
-#include <string>
-#include <cstdint>
-#include <memory>
-#include "BitmapFileHeader.h"
+#include "Bitmap.h"
 #include "BitmapInfoHeader.h"
+#include "BitmapFileHeader.h"
 
-using namespace std;
 using namespace caveofprogramming;
+using namespace std;
 
 namespace caveofprogramming {
-	Bitmap::Bitmap(int width, int height) : m_width(width), m_height(height), m_pPixels(new uint8_t[width * height * 3]{}) {
-		// Constructor implementation
-	}
 
-	void Bitmap::setPixel(int x, int y, uint8_t red, uint8_t green, uint8_t blue) {
-		// setPixel implementation
-
-		uint8_t* pPixels = m_pPixels.get();
-		//pPixels += (y * 3) * m_width + (x * 3);
-		 pPixels += (y * m_width + x) * 3; 
-
-		pPixels[0] = blue;
-		pPixels[1] = green;
-		pPixels[2] = red;
+	Bitmap::Bitmap(int width, int height) :
+		m_width(width), m_height(height), m_pPixels(
+			new uint8_t[width * height * 3]{ }) {
 
 	}
 
 	bool Bitmap::write(string filename) {
-		// write implementation
-		BitmapFileHeader fileName;
+
+		BitmapFileHeader fileHeader;
 		BitmapInfoHeader infoHeader;
-		fileName.fileSize = sizeof(BitmapFileHeader) + sizeof(BitmapInfoHeader) + m_width * m_height * 3; // Total file size in bytes.
-		fileName.dataOffset = sizeof(BitmapFileHeader) + sizeof(BitmapInfoHeader); // Offset to the start of the pixel data.
-		infoHeader.width = m_width; // Width of the bitmap in pixels.
-		infoHeader.height = m_height; // Height of the bitmap in pixels.
+
+		fileHeader.fileSize = sizeof(BitmapFileHeader) + sizeof(BitmapInfoHeader)
+			+ m_width * m_height * 3;
+		fileHeader.dataOffset = sizeof(BitmapFileHeader) + sizeof(BitmapInfoHeader);
+
+		infoHeader.width = m_width;
+		infoHeader.height = m_height;
+
 		ofstream file;
-		file.open(filename, ios::out | ios::binary);// Open the file in binary mode.
+		file.open(filename, ios::out | ios::binary);
 
 		if (!file) {
 			return false;
 		}
-		file.write((char*)&fileName, sizeof(fileName));
+
+		file.write((char*)&fileHeader, sizeof(fileHeader));
 		file.write((char*)&infoHeader, sizeof(infoHeader));
 		file.write((char*)m_pPixels.get(), m_width * m_height * 3);
 
 		file.close();
+
 		if (!file) {
 			return false;
 		}
@@ -53,9 +46,18 @@ namespace caveofprogramming {
 		return true;
 	}
 
-	Bitmap::~Bitmap() {
-		// Destructor implementation
+	void Bitmap::setPixel(int x, int y, uint8_t red, uint8_t green, uint8_t blue) {
+		uint8_t* pPixel = m_pPixels.get();
 
+		pPixel += (y * 3) * m_width + (x * 3);
+
+		pPixel[0] = blue;
+		pPixel[1] = green;
+		pPixel[2] = red;
 	}
 
-} // namespace caveofprogramming
+	Bitmap::~Bitmap() {
+		// TODO Auto-generated destructor stub
+	}
+
+} /* namespace caveofprogramming */

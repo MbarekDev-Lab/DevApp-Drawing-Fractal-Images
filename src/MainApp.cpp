@@ -1,78 +1,35 @@
+
 #include <iostream>
-#include <cstdint>
-#include <memory>
-#include <math.h>
-#include "Mandelbrot.h"
-#include "Bitmap.h"
-#include "ZoomList.h"
+
+#include "FractalCreator.h"
+#include "RGB.h"
+#include "Zoom.h"
 
 using namespace std;
 using namespace caveofprogramming;
 
 int main() {
+	FractalCreator fractalCreator(800, 600);
 
-	int const WIDTH = 800;
-	int const HEIGHT = 600;
+	/*
+	fractalCreator.addRange(0.0, RGB(5, 10, 15));
+	fractalCreator.addRange(0.3, RGB(100, 0, 100));
+	fractalCreator.addRange(0.5, RGB(100, 100, 0));
+	fractalCreator.addRange(1.0, RGB(100, 100, 100));
+	*/
 
-	Bitmap bitmap(WIDTH, HEIGHT);
-
-	double min = 999999;
-	double max = -999999;
-
-	ZoomList zoomList(WIDTH, HEIGHT);
-	zoomList.add(Zoom(WIDTH /2, HEIGHT/2,4.0/WIDTH));
+	fractalCreator.addRange(0.0, RGB(50, 0, 0));
+	fractalCreator.addRange(0.3, RGB(100, 0, 0));
+	fractalCreator.addRange(0.5, RGB(150, 0, 0));
+	fractalCreator.addRange(1.0, RGB(255, 0, 0));
 
 
-	unique_ptr<int[]> histogram(new int[Mandelbrot::MAX_ITERATIONS] { 0 });
-	unique_ptr<int[]> fractal(new int[WIDTH * HEIGHT] { 0 });
 
-	for (int y = 0; y < HEIGHT; y++) {
-		for (int x = 0; x < WIDTH; x++) {
-			double xFractal = (x - WIDTH / 2 - 200) * 2.0 / HEIGHT;
-			double yFractal = (y - HEIGHT / 2) * 2.0 / HEIGHT;
+	cout << fractalCreator.getRange(999) << endl;
 
-			int iterations = Mandelbrot::getIterations(xFractal, yFractal);
-
-			fractal[y * WIDTH + x] = iterations;
-
-			if (iterations != Mandelbrot::MAX_ITERATIONS) {
-				histogram[iterations]++;
-			}
-
-		}
-	}
-
-	int total = 0;
-	for (int i = 0; i < Mandelbrot::MAX_ITERATIONS; i++) {
-		total += histogram[i];
-	}
-
-	for (int y = 0; y < HEIGHT; y++) {
-		for (int x = 0; x < WIDTH; x++) {
-
-			uint8_t red = 0;
-			uint8_t green = 0;
-			uint8_t blue = 0;
-
-			int iterations = fractal[y * WIDTH + x];
-
-			if (iterations != Mandelbrot::MAX_ITERATIONS) {
-
-				double hue = 0.0;
-
-				for (int i = 0; i <= iterations; i++) {
-					hue += ((double)histogram[i]) / total;
-				}
-
-				green = pow(255, hue);
-			}
-
-			bitmap.setPixel(x, y, red, green, blue);
-
-		}
-	}
-
-	bitmap.write("test.bmp");
+	fractalCreator.addZoom(Zoom(295, 202, 0.1));
+	fractalCreator.addZoom(Zoom(312, 304, 0.1));
+	fractalCreator.run("testBitmap.bmp");
 
 	cout << "Finished." << endl;
 	return 0;

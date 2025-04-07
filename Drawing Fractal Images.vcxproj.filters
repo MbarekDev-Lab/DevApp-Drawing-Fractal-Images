@@ -5,6 +5,8 @@
     <ClCompile Include="src\Bitmap.cpp" />
     <ClCompile Include="src\Mandelbrot.cpp" />
     <ClCompile Include="src\ZoomList.cpp" />
+    <ClCompile Include="src\FractalCreatorcpp.cpp" />
+    <ClCompile Include="src\RGB.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\Bitmap.h" />
@@ -13,5 +15,7 @@
     <ClInclude Include="include\Mandelbrot.h" />
     <ClInclude Include="include\Zoom.h" />
     <ClInclude Include="include\ZoomList.h" />
+    <ClInclude Include="include\FractalCreator.h" />
+    <ClInclude Include="include\RGB.h" />
   </ItemGroup>
 </Project>
