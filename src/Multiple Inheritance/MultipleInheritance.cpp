@@ -15,6 +15,22 @@ public:
 
 class Machine {
 public:
-	virtual void start() = 0;
+	virtual void play() { cout << " Starting Machine ... " << endl; };
+	virtual void reset() { cout << " Resetting Machine ... " << endl; };
 	virtual ~Machine() {}
+};
+
+
+class Synthesizer : public MusicalInsttrument, public Machine {
+public:
+	void play() override {
+		MusicalInsttrument::play();
+		Machine::play();
+		cout << " Playing Synthesizer ... " << endl;
+	}
+	void reset() override {
+		MusicalInsttrument::reset();
+		Machine::reset();
+		cout << " Resetting Synthesizer ... " << endl;
+	}
 };
