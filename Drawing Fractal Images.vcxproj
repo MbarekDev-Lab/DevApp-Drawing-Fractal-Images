@@ -23,6 +23,7 @@
     <ClCompile Include="src\FractalCreatorcpp.cpp" />
     <ClCompile Include="src\MainApp.cpp" />
     <ClCompile Include="src\Mandelbrot.cpp" />
+    <ClCompile Include="src\Multiple Inheritance\MultipleInheritance.cpp" />
     <ClCompile Include="src\RGB.cpp" />
     <ClCompile Include="src\ZoomList.cpp" />
   </ItemGroup>

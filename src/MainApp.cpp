@@ -18,14 +18,14 @@ int main() {
 	fractalCreator.addRange(1.0, RGB(100, 100, 100));
 	*/
 
-	fractalCreator.addRange(0.0, RGB(50, 0, 0));
-	fractalCreator.addRange(0.3, RGB(100, 0, 0));
-	fractalCreator.addRange(0.5, RGB(150, 0, 0));
-	fractalCreator.addRange(1.0, RGB(255, 0, 0));
+	fractalCreator.addRange(0.0, RGB(10, 0, 0));
+	fractalCreator.addRange(0.3, RGB(150, 0, 0));
+	fractalCreator.addRange(0.2, RGB(150, 0, 0));
+	fractalCreator.addRange(1.0, RGB(25, 0, 0));
 
 
-
-	cout << fractalCreator.getRange(999) << endl;
+	// testing rang 
+	cout <<" getRange :  " << fractalCreator.getRange(999) << endl;
 
 	fractalCreator.addZoom(Zoom(295, 202, 0.1));
 	fractalCreator.addZoom(Zoom(312, 304, 0.1));

@@ -41,7 +41,7 @@ namespace caveofprogramming {
 		calculateTotalIterations();
 		calculateRangeTotals();
 		drawFractal();
-		writeBitmap("test.bmp");
+		writeBitmap(name);
 
 	}
 
